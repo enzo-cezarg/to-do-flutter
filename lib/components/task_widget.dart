@@ -46,7 +46,7 @@ class TaskWidget extends StatelessWidget {
               label: 'UNDO',
               textColor: onPrimaryColor,
               onPressed: () {
-                taskProvider.addTask(removedTask);
+                taskProvider.addTask(removedTask.description, removedTask.isDone, removedTask.taskDate);
               },
             ),
             duration: Duration(seconds: 3),
@@ -103,7 +103,7 @@ class TaskWidget extends StatelessWidget {
                       side: BorderSide(
                         color: Theme.of(context).colorScheme.outline,
                       ),
-                      onChanged: (v) => taskProvider.toggleTask(task.id, v ?? false),
+                      onChanged: (v) => {},
                     ),
                   ),
                 ),

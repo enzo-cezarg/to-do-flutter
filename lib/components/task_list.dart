@@ -8,15 +8,25 @@ class TaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tasks = context.watch<TaskProvider>().tasks;
-
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-        itemCount: tasks.length,
-        itemBuilder: (context, index) {
-          return TaskWidget(task: tasks[index]);
-        },
+      child: FutureBuilder(
+        future: Provider.of<TaskProvider>(context, listen: false).loadTasks(),
+        builder: (ctx, snapshot) => snapshot.connectionState == ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Consumer<TaskProvider>(
+                builder: (ctx, taskProvider, child) => taskProvider.itemsCount == 0
+                    ? child!
+                    : ListView.builder(
+                        itemCount: taskProvider.itemsCount,
+                        itemBuilder: (context, index) {
+                          return TaskWidget(task: taskProvider.tasks[index]);
+                        },
+                      ),
+                child: Text('No tasks.'),
+              ),
       ),
     );
   }

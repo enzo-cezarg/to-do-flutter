@@ -6,13 +6,13 @@ class Task {
     required this.taskDate,
   });
 
-  final int id;
+  final String id;
   final String description;
   final bool isDone;
   final DateTime taskDate;
 
   Task copyWith({
-    int? id,
+    String? id,
     String? description,
     bool? isDone,
     DateTime? taskDate,
