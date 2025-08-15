@@ -1,0 +1,21 @@
+# Ignorar plataformas nativas para contagem de linguagens
+android/** linguist-vendored
+ios/** linguist-vendored
+macos/** linguist-vendored
+windows/** linguist-vendored
+linux/** linguist-vendored
+
+# Ignorar diretórios de build e web
+build/** linguist-vendored
+web/** linguist-vendored
+
+# Marcar arquivos de configuração nativa como gerados
+*.cmake linguist-generated
+*.cpp linguist-generated
+*.cc linguist-generated
+*.c linguist-generated
+*.h linguist-generated
+
+# Forçar o reconhecimento de Dart nos diretórios principais
+lib/** linguist-language=Dart
+test/** linguist-language=Dart
