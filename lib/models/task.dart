@@ -24,4 +24,6 @@ class Task {
       taskDate: taskDate ?? this.taskDate,
     );
   }
+
+  int get isDoneAsInt => isDone ? 1 : 0;
 }

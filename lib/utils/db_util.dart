@@ -22,4 +22,13 @@ class DbUtil {
     final db = await DbUtil.database();
     return db.query(table);
   }
+
+  static Future<void> deleteId(String table, String id) async {
+    final db = await DbUtil.database();
+    await db.delete(
+      table,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
 }

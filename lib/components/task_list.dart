@@ -25,7 +25,7 @@ class TaskList extends StatelessWidget {
                           return TaskWidget(task: taskProvider.tasks[index]);
                         },
                       ),
-                child: Text('No tasks.'),
+                child: Center(child: Text('No tasks.')),
               ),
       ),
     );

@@ -16,7 +16,6 @@ class TaskWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final taskProvider = context.read<TaskProvider>();
     final primaryColor = Theme.of(context).colorScheme.primary;
-    final onPrimaryColor = Theme.of(context).colorScheme.onPrimary;
 
     return Dismissible(
       key: ValueKey(task.id),
@@ -35,16 +34,19 @@ class TaskWidget extends StatelessWidget {
         Task removedTask = task;
         taskProvider.deleteTask(task.id);
 
-        ScaffoldMessenger.of(context).showSnackBar(
+        final messenger = ScaffoldMessenger.of(context);
+
+        messenger.clearSnackBars();
+        messenger.showSnackBar(
           SnackBar(
-            backgroundColor: primaryColor,
+            backgroundColor: Colors.red.shade600,
             content: Text(
               'Item removed',
-              style: TextStyle(color: onPrimaryColor),
+              style: TextStyle(color: Colors.white),
             ),
             action: SnackBarAction(
               label: 'UNDO',
-              textColor: onPrimaryColor,
+              textColor: Colors.white,
               onPressed: () {
                 taskProvider.addTask(removedTask.description, removedTask.isDone, removedTask.taskDate);
               },

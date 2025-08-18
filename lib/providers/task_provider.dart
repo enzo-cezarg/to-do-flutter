@@ -35,22 +35,22 @@ class TaskProvider with ChangeNotifier {
     return value != 0 ? true : false;
   }
 
-  int getIsDoneInt(bool value) {
-    return value ? 1 : 0;
-  }
-
-  void addTask(String description, bool isDone, DateTime taskDate) {
+  Future<bool> addTask(String description, bool isDone, DateTime taskDate) async {
     final newTask = Task(id: Uuid().v4(), description: description, isDone: isDone, taskDate: taskDate);
-    _tasks.add(newTask);
 
-    DbUtil.insert('tasks', {
-      'id': newTask.id,
-      'description': newTask.description,
-      'isDone': getIsDoneInt(newTask.isDone),
-      'taskDate': newTask.taskDate.millisecondsSinceEpoch,
-    });
-
-    notifyListeners();
+    try {
+      await DbUtil.insert('tasks', {
+        'id': newTask.id,
+        'description': newTask.description,
+        'isDone': newTask.isDoneAsInt,
+        'taskDate': newTask.taskDate.millisecondsSinceEpoch,
+      });
+      _tasks.add(newTask);
+      notifyListeners();
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   //void toggleTask(int id, bool isDone) {
@@ -61,8 +61,14 @@ class TaskProvider with ChangeNotifier {
   //  }
   //}
 
-  void deleteTask(String id) {
-    _tasks.removeWhere((t) => t.id == id);
-    notifyListeners();
+  Future<bool> deleteTask(String id) async {
+    try {
+      await DbUtil.deleteId('tasks', id);
+      _tasks.removeWhere((t) => t.id == id);
+      notifyListeners();
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }
