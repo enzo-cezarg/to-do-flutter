@@ -8,7 +8,7 @@ class Task {
 
   final String id;
   final String description;
-  final bool isDone;
+  bool isDone;
   final DateTime taskDate;
 
   Task copyWith({

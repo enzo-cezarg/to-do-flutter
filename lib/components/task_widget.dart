@@ -105,7 +105,10 @@ class TaskWidget extends StatelessWidget {
                       side: BorderSide(
                         color: Theme.of(context).colorScheme.outline,
                       ),
-                      onChanged: (v) => {},
+                      onChanged: (v) async {
+                        task.isDone = v!;
+                        await taskProvider.toggleTaskDone(task);
+                      },
                     ),
                   ),
                 ),

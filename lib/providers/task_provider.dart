@@ -53,13 +53,15 @@ class TaskProvider with ChangeNotifier {
     }
   }
 
-  //void toggleTask(int id, bool isDone) {
-  //  final index = _tasks.indexWhere((t) => t.id == id);
-  //  if (index != -1) {
-  //    _tasks[index] = _tasks[index].copyWith(isDone: isDone);
-  //    notifyListeners();
-  //  }
-  //}
+  Future<bool> toggleTaskDone(Task task) async {
+    try {
+      await DbUtil.updateData('tasks', {'isDone': task.isDoneAsInt}, task.id);
+      notifyListeners();
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 
   Future<bool> deleteTask(String id) async {
     try {

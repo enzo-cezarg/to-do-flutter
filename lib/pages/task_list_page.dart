@@ -42,7 +42,7 @@ class TaskListPage extends StatelessWidget {
                       backgroundColor: Theme.of(context).colorScheme.error,
                       duration: Duration(seconds: 2),
                       content: Text(
-                        'Something went wrong.',
+                        'Oops! Something went wrong.',
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

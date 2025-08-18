@@ -23,6 +23,16 @@ class DbUtil {
     return db.query(table);
   }
 
+  static Future<void> updateData(String table, Map<String, Object> values, String id) async {
+    final db = await DbUtil.database();
+    await db.update(
+      table,
+      values,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   static Future<void> deleteId(String table, String id) async {
     final db = await DbUtil.database();
     await db.delete(
