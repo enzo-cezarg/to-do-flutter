@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:to_do_firebase/components/task_form.dart';
 import 'package:to_do_firebase/components/task_list.dart';
-import 'package:to_do_firebase/providers/task_provider.dart';
+//import 'package:to_do_firebase/providers/task_provider.dart';
 import 'package:to_do_firebase/providers/theme_provider.dart';
 
 class TaskListPage extends StatelessWidget {
@@ -9,7 +10,7 @@ class TaskListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
+    //final taskProvider = Provider.of<TaskProvider>(context, listen: false);
     return Consumer<ThemeProvider>(
       builder: (ctx, theme, child) => Scaffold(
         appBar: AppBar(
@@ -21,32 +22,41 @@ class TaskListPage extends StatelessWidget {
         body: TaskList(),
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            final bool added = await taskProvider.addTask('tarefa teste', false, DateTime.now());
-            if (!context.mounted) return;
+            showModalBottomSheet(
+              context: context,
+              isScrollControlled: true,
+              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(16))),
+              builder: (context) {
+                return const TaskForm();
+              },
+            );
 
-            final messenger = ScaffoldMessenger.of(context);
-            messenger.clearSnackBars();
-            added
-                ? messenger.showSnackBar(
-                    SnackBar(
-                      backgroundColor: Colors.green,
-                      duration: Duration(seconds: 1),
-                      content: Text(
-                        'Added.',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  )
-                : messenger.showSnackBar(
-                    SnackBar(
-                      backgroundColor: Theme.of(context).colorScheme.error,
-                      duration: Duration(seconds: 2),
-                      content: Text(
-                        'Oops! Something went wrong.',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  );
+            //final bool added = await taskProvider.addTask('tarefa teste', false, DateTime.now());
+            //if (!context.mounted) return;
+//
+            //final messenger = ScaffoldMessenger.of(context);
+            //messenger.clearSnackBars();
+            //added
+            //    ? messenger.showSnackBar(
+            //        SnackBar(
+            //          backgroundColor: Colors.green,
+            //          duration: Duration(seconds: 1),
+            //          content: Text(
+            //            'Added.',
+            //            style: TextStyle(color: Colors.white),
+            //          ),
+            //        ),
+            //      )
+            //    : messenger.showSnackBar(
+            //        SnackBar(
+            //          backgroundColor: Theme.of(context).colorScheme.error,
+            //          duration: Duration(seconds: 2),
+            //          content: Text(
+            //            'Oops! Something went wrong.',
+            //            style: TextStyle(color: Colors.white),
+            //          ),
+            //        ),
+            //      );
           },
           child: Icon(Icons.add),
         ),
