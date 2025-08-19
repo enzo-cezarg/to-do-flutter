@@ -16,6 +16,7 @@ class TaskWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final taskProvider = context.read<TaskProvider>();
     final primaryColor = Theme.of(context).colorScheme.primary;
+    bool isLate = task.taskDate.millisecondsSinceEpoch < DateTime.now().millisecondsSinceEpoch && task.isDone == false;
 
     return Dismissible(
       key: ValueKey(task.id),
@@ -97,7 +98,8 @@ class TaskWidget extends StatelessWidget {
                     subtitle: Text(
                       DateFormat('dd/MM/yyyy HH:mm').format(task.taskDate),
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.outline,
+                        fontWeight: isLate ? FontWeight.bold : FontWeight.normal,
+                        color: isLate ? Theme.of(context).colorScheme.error : Theme.of(context).colorScheme.outline,
                       ),
                     ),
                     trailing: Checkbox(
